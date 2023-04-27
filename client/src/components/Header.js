@@ -1,16 +1,19 @@
 import {Fragment, useState} from 'react'
 import {
   AppBar,
+  Toolbar,
   IconButton,
   Avatar,
   Popover,
   List,
   ListSubheader,
   ListItemButton,
+  Typography,
 } from '@mui/material'
 import OnlineIndicator from './OnlineIndicator'
 import AuthModal from './AuthModal'
 import {useAuth} from '../contexts/AuthContext'
+import Html5QrcodePlugin from "html5-qrcode";
 
 export default function Header() {
   const {isLoggedIn, account, logout} = useAuth()
@@ -43,12 +46,15 @@ export default function Header() {
   }
 
   return (
-    <AppBar className='header' position='static'>
-      <h1>Web App</h1>
+    <AppBar className="header" position="static" style={{ background: '#2E3B55' }} >
+    <Toolbar>
+      <Typography className="font-serif " variant="h5" component="div" flexGrow={1}>
+        Flavour Fix
+      </Typography>
 
       <IconButton onClick={openPopover}>
         <OnlineIndicator online={isLoggedIn}>
-          <Avatar src={account?.username || ''} alt={account?.username || ''} />
+          <Avatar src={account?.username || ""} alt={account?.username || ""} />
         </OnlineIndicator>
       </IconButton>
 
@@ -56,11 +62,12 @@ export default function Header() {
         anchorEl={anchorEl}
         open={popover}
         onClose={closePopover}
-        anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-        transformOrigin={{vertical: 'top', horizontal: 'right'}}>
-        <List style={{minWidth: '100px'}}>
-          <ListSubheader style={{textAlign: 'center'}}>
-            Hello, {isLoggedIn ? account.username : 'Guest'}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <List style={{ minWidth: "100px" }}>
+          <ListSubheader style={{ textAlign: "center" }}>
+            Hello, {isLoggedIn ? account.username : "Guest"}
           </ListSubheader>
 
           {isLoggedIn ? (
@@ -68,7 +75,7 @@ export default function Header() {
           ) : (
             <Fragment>
               <ListItemButton onClick={clickLogin}>Login</ListItemButton>
-              <ListItemButton onClick={clickRegister}>Reigster</ListItemButton>
+              <ListItemButton onClick={clickRegister}>Register</ListItemButton>
             </Fragment>
           )}
         </List>
@@ -80,6 +87,8 @@ export default function Header() {
         isRegisterMode={register}
         toggleRegister={() => setRegister((prev) => !prev)}
       />
-    </AppBar>
+    </Toolbar>
+  </AppBar>
+
   )
 }

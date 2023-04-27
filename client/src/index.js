@@ -4,7 +4,8 @@ import App from './App'
 import {AuthProvider} from './contexts/AuthContext'
 import CssBaseline from '@mui/material/CssBaseline'
 import '@fontsource/roboto'
-import './styles/index.css'
+import './index.css'; //
+
 
 ReactDOM.render(
   <React.StrictMode>
