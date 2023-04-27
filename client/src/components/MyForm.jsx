@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import io from "socket.io-client"; // Import the socket.io-client library
 
+
 const socket = io("http://localhost:8080");
 
 const MyForm = ({ preferenceData }) => {
@@ -59,6 +60,21 @@ const handleSubmit = (event) => {
       console.error("Error updating preference:", error);
     });
 };
+
+// const accountSid = 'YOUR_ACCOUNT_SID';
+// const authToken = 'YOUR_AUTH_TOKEN';
+// const client = require('twilio')(accountSid, authToken);
+
+// const phoneNumber = '9347532701';
+// const message = `Click here to leave a review: http://localhost:3000/#`;
+
+// client.messages
+//   .create({
+//     body: message,
+//     from: 'tno', 
+//     to: phoneNumber
+//   })
+//   .then(message => console.log(`Message sent to ${message.to}`));
 
   //--------------------------------------------------------------------------------
  
@@ -192,8 +208,12 @@ const handleTipsChange = (e) => {
     >
       Clear
     </button>
+   
   </div>
 </form>
+
+
+
   );
 };
 
@@ -201,13 +221,9 @@ const handleTipsChange = (e) => {
 export default MyForm;
 
 
-
-// // In this example, I've used Tailwind CSS classes to style the form with a clean and modern look.
-//  I've used rounded-lg for rounded corners, border for input fields, and focus:outline-none and 
-//  focus:ring-2 classes to customize the focus state of the form inputs. I've also used hover:bg-* 
-//  and transition-colors duration-* classes for smooth hover effects. 
-//  The form has a max-width of 640px, centered using mx-auto class, and a margin-top of 10rem for 
-//  vertical spacing. The buttons are styled with background color, text color, padding, and rounded-md
-//   for a polished appearance.
-
+// add this implementation
+//  when form submitted i want it to send a sms link to phone number which is available with
+//  as phone in form and the link should render a new tab in their phone which is review 
+//  form in my website when user submtting the review in text he can also add photo of him 
+//   and it should get stored in db
 

@@ -9,12 +9,23 @@ const Chef = () => {
 
     socket.on("preferenceUpdated", (updatedPreference) => {
       setPreferenceData(prevData => [...prevData, updatedPreference]);
+
+      // Read items and tips out loud
+      const itemsText = updatedPreference.items.join(", ");
+      const tipsText = updatedPreference.tips.join(", ");
+      const speech = new SpeechSynthesisUtterance(`New order! Items: ${itemsText}. Tips: ${tipsText}.`);
+      speech.lang = "en-US";
+      speech.volume = 1;
+      speech.rate = 1;
+      speech.pitch = 1;
+      window.speechSynthesis.speak(speech);
     });
 
     return () => {
       socket.off("preferenceUpdated");
     };
   }, []);
+  
   
   const handleDelete = (index) => {
     // Create a copy of preferenceData state

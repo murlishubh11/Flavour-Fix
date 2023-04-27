@@ -1,20 +1,36 @@
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import {useAuth} from './contexts/AuthContext'
 import Header from './components/Header'
 import Chef from './components/Chef'
 import Cashier from './components/Cashier'
+import ReviewForm from './components/ReviewForm'
 import './index.css'
 
 export default function App() {
+
+ 
   const {isLoggedIn} = useAuth()
 
   return (
 
     <div className='App'>
       <Header />
+      <div>
+      <Router>
+   
+        <Switch>
+          <Route path="/givereview">
+            <ReviewForm />
+          </Route>
+        </Switch>
+
+    </Router>
+    </div>
 
       {isLoggedIn ? <LoggedInText /> : <LoggedOutText />}
     </div>
-  )
+  );
 }
 
 const LoggedInText = () => {
@@ -41,6 +57,7 @@ const LoggedOutText = () => {
             <a href="#" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">Explore Our Menu</a>
           </div>
         </div>
+        
       </body>
     </>
   );
