@@ -33,6 +33,11 @@ async function register(request, response, next) {
       })
     }
 
+    // Encrypt password
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
+
+
     let newAccount;
     // Check role and save cookstyle if applicable
     if (role === 'user') {
@@ -42,14 +47,12 @@ async function register(request, response, next) {
         .string()
         .valid('Indian', 'Chinese', 'Italian')
         .validateAsync(cookstyle);
-      newAccount = new Account({ username, password, role, cookstyle });
+      newAccount = new Account({ username, password: hash, role, cookstyle });
     } else {
-      newAccount = new Account({ username, password, role });
+      newAccount = new Account({ username, password: hash, role });
     }
 
-    // Encrypt password
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(password, salt)
+    
 
     // Save account
     await newAccount.save()

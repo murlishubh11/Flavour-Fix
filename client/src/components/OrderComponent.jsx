@@ -79,7 +79,7 @@ const OrderComponent = (props) => {
   };
 
   return (
-    <div className=' flex justify-center'>
+    <div className=' flex justify-center w-1/4 mx-auto h-1/4'>
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-8">
       <div className="mb-4">
         <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
@@ -107,6 +107,45 @@ const OrderComponent = (props) => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2">Items</label>
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th className="text-left py-2 px-3 bg-gray-100 text-gray-600 font-bold">Item</th>
+              <th className="text-left py-2 px-3 bg-gray-100 text-gray-600 font-bold">Quantity</th>
+              <th className="py-2 px-3 bg-gray-100 text-gray-600 font-bold"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item, index) => (
+              <tr key={index}>
+                <td className="border py-2 px-3">
+                  <input
+                    type="text"
+                    value={item.item}
+                    onChange={(e) => handleItemChange(index, 'item', e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </td>
+                <td className="border py-2 px-3">
+                  <input
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </td>
+                <td className="border py-2 px-3">
+                  <button type="button" onClick={() => handleRemoveItem(index)} className="text-red-600 hover:text-red-800 font-bold">
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       <div className="mb-4">
         <label htmlFor="tips" className="block text-gray-700 font-bold mb-2">
           Tips (separate with comma)
@@ -146,44 +185,7 @@ const OrderComponent = (props) => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Items</label>
-        <table className="w-full">
-          <thead>
-            <tr>
-              <th className="text-left py-2 px-3 bg-gray-100 text-gray-600 font-bold">Item</th>
-              <th className="text-left py-2 px-3 bg-gray-100 text-gray-600 font-bold">Quantity</th>
-              <th className="py-2 px-3 bg-gray-100 text-gray-600 font-bold"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, index) => (
-              <tr key={index}>
-                <td className="border py-2 px-3">
-                  <input
-                    type="text"
-                    value={item.item}
-                    onChange={(e) => handleItemChange(index, 'item', e.target.value)}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </td>
-                <td className="border py-2 px-3">
-                  <input
-                    type="number"
-                    value={item.quantity}
-                    onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </td>
-                <td className="border py-2 px-3">
-                  <button type="button" onClick={() => handleRemoveItem(index)} className="text-red-600 hover:text-red-800 font-bold">
-                    Remove
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      
         <div className="mt-4">
           <button type="button" onClick={handleAddItem} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Add Item
@@ -192,8 +194,8 @@ const OrderComponent = (props) => {
       </div>
 
       <button type="button" onClick={handleReset} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-  Reset
-</button>
+        Reset
+     </button>
       <div className="mt-8">
         <button type="submit" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
           Submit

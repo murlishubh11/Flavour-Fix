@@ -48,14 +48,14 @@ const Cashier = () => {
         <ParentComponent preferenceData={preferenceData} />
       </div> */}
 
-      <div>
-        <Menu/>
-      </div>
-      <div>
-      <OrderComponent setOrderData={setOrderData} />
-
-
-      </div>
+<div class="flex flex-wrap justify-center">
+  <div class="w-full md:w-1/2 lg:w-1/3 p-2 z-10 ">
+    <Menu />
+  </div>
+  <div class="w-full md:w-1/2 lg:w-2/3 p-2 z-10">
+    <OrderComponent setOrderData={setOrderData} class="h-64 w-64" />
+  </div>
+</div>
       <div>
                {orderData && <Billing orderData={orderData}/>}
 </div>

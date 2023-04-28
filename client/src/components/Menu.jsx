@@ -60,7 +60,7 @@ class Menu extends React.Component {
         </div>
 
         <div className="overflow-auto h-64">
-          <table className="table-fixed w-1/4">
+          <table className="table-auto w-1/4">
             <thead>
               <tr>
                 <th className="px-4 py-2">Number</th>

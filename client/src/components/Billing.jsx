@@ -25,7 +25,9 @@ const Billing = ({ orderData }) => {
             {items &&
               items.map((item, index) => (
                 <tr key={index}>
-                  <td className="border px-4 py-2">{item.item}</td>
+                  <td className="border px-4 py-2">{JSON.parse(item.item).name} &nbsp;&nbsp;
+                  {JSON.parse(item.item).type}&nbsp;&nbsp;
+{JSON.parse(item.item).price}</td>
                   <td className="border px-4 py-2">{item.quantity}</td>
                 </tr>
               ))}
