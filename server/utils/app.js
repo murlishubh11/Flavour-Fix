@@ -34,6 +34,11 @@ const io = require('socket.io')(server, {
 io.on("connection", (socket) => {
   console.log("Client connected:", socket.id);
 
+  socket.on("newOrder", (order) => {
+    
+    io.emit("orderBroadcast", order);
+  });
+
   // Event listener for updating preference data
   socket.on("updatePreference", (updatedPreference) => {
     // Update the preference data in the server
@@ -41,7 +46,7 @@ io.on("connection", (socket) => {
 
     io.emit("preferenceUpdated", updatedPreference);
   });
-
+ 
  
   socket.on("disconnect", () => {
     console.log("Client disconnected:", socket.id);

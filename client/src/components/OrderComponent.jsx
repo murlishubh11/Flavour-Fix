@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import io from 'socket.io-client';
+
+const socket = io("http://localhost:8080");
 
 const OrderComponent = () => {
   const [name, setName] = useState('');
@@ -54,8 +57,24 @@ const OrderComponent = () => {
   
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
-    // handle form submission logic here
+    
+    const order = {
+      name,
+      phoneNumber,
+      tips,
+      tableNo,
+      tokenNo,
+      items,
+    };
+  
+    // Emit the order to all connected clients through a socket event
+    socket.emit('newOrder', order);
+  
+    // Reset the form
+    // handleReset();
+    // alert('Order submitted!');
   };
 
   return (

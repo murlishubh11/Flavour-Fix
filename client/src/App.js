@@ -6,6 +6,7 @@ import Chef from './components/Chef'
 import Cashier from './components/Cashier'
 import ReviewForm from './components/ReviewForm'
 import './index.css'
+import Newchef from './components/Newchef';
 
 export default function App() {
 
@@ -39,7 +40,8 @@ const LoggedInText = () => {
   return (
     <>
       {account.role === 'admin' && <Cashier />}
-      {account.role === 'user' ? <Chef /> : null}
+      {account.role === 'user' ? <Newchef cookstyle={account.cookstyle} /> : null}
+      {/* {account.role === 'user' ? <Chef /> : null} */}
     </>
   );
 };
