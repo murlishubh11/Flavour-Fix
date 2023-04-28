@@ -1,12 +1,7 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const instance = new mongoose.Schema(
   {
-    /*
-      document ID is set by default via MongoDB - next line is deprecated
-      _id: mongoose.Schema.Types.ObjectId,
-    */
-
     username: {
       type: String,
       required: true,
@@ -23,14 +18,21 @@ const instance = new mongoose.Schema(
       enum: ['user', 'admin'],
       default: 'user',
     },
+    cookstyle: {
+      type: String,
+      enum: ['Indian', 'Chinese', 'Italian'],
+      required: function() {
+        return this.role === 'user';
+      },
+    },
   },
   {
     timestamps: true,
-  },
-)
+  }
+);
 
-// NOTE! use a singular model name, mongoose automatically creates a collection like so:
+// NOTE: use a singular model name, mongoose automatically creates a collection like so:
 // model: 'Account' === collection: 'accounts'
-const modelName = 'Account'
+const modelName = 'Account';
 
-module.exports = mongoose.model(modelName, instance)
+module.exports = mongoose.model(modelName, instance);

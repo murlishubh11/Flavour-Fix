@@ -11,6 +11,7 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [selectedRole, setSelectedRole] = useState('user'); // Default role is 'user'
+  const [selectedCookStyle, setSelectedCookStyle] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,14 +22,21 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
     setSelectedRole(e.target.value);
   }
 
+  const handleCookStyleChange = (e) => {
+    setSelectedCookStyle(e.target.value);
+  }
+
   const clickSubmit = async () => {
     setLoading(true);
     setError('');
 
     try {
       if(isRegisterMode) {
-        // Add the selected role to the formData before calling register()
+        // Add the selected role and cookstyle to the formData before calling register()
         formData.role = selectedRole;
+        if(selectedRole === 'user') {
+          formData.cookstyle = selectedCookStyle;
+        }
         await register(formData);
       } else {
         await login(formData);
@@ -42,20 +50,30 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
   };
 
   const disabledLoginButton = !formData['username'] || !formData['password'];
-  const disabledRegisterButton = !formData['username'] || !formData['password'];
+  const disabledRegisterButton = !formData['username'] || !formData['password'] || (selectedRole === 'user' && !selectedCookStyle);
 
   return (
     <Dialog open={open} onClose={close}>
       {isRegisterMode ? (
-        <Fragment>
+          <Fragment>
           <RegisterForm formData={formData} handleChange={handleChange} />
           <FormControl component="fieldset" sx={{ mt: 2 }}>
             <FormLabel component="legend">Role</FormLabel>
             <RadioGroup row aria-label="role" name="role" value={selectedRole} onChange={handleRoleChange}>
               <FormControlLabel value="user" control={<Radio />} label="User" />
-              <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+              <FormControlLabel value="admin" control={<Radio />} label="admin" />
             </RadioGroup>
           </FormControl>
+          {selectedRole === 'user' && (
+            <FormControl component="fieldset" sx={{ mt: 2 }}>
+              <FormLabel component="legend">Cook Style</FormLabel>
+              <RadioGroup row aria-label="cookstyle" name="cookstyle" value={selectedCookStyle} onChange={handleCookStyleChange}>
+                <FormControlLabel value="Indian" control={<Radio />} label="Indian" />
+                <FormControlLabel value="Chinese" control={<Radio />} label="Chinese" />
+                <FormControlLabel value="Italian" control={<Radio />} label="Italian" />
+              </RadioGroup>
+            </FormControl>
+          )}
         </Fragment>
       ) : (
         <LoginForm formData={formData} handleChange={handleChange} />
@@ -82,6 +100,7 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
     </Dialog>
   );
 }
+
 
 /////////////////////////////////////////////////////////////////////////
 

@@ -2,6 +2,7 @@ const joi = require('joi')
 const bcrypt = require('bcrypt')
 const Account = require('../../models/Account')
 const {signToken} = require('../../middlewares/jsonwebtoken')
+
 async function register(request, response, next) {
   try {
     // Validate request data
@@ -9,7 +10,8 @@ async function register(request, response, next) {
       .object({
         username: joi.string().required(),
         password: joi.string().required(),
-        role: joi.string().required()
+        role: joi.string().required(),
+        cookstyle: joi.when('role', { is: 'user', then: joi.string().valid('Indian', 'Chinese', 'Italian').required() })
       })
       .validateAsync(request.body)
   } catch (error) {
@@ -31,12 +33,25 @@ async function register(request, response, next) {
       })
     }
 
+    let newAccount;
+    // Check role and save cookstyle if applicable
+    if (role === 'user') {
+      const { cookstyle } = request.body;
+      // Validate cookstyle value
+      await joi
+        .string()
+        .valid('Indian', 'Chinese', 'Italian')
+        .validateAsync(cookstyle);
+      newAccount = new Account({ username, password, role, cookstyle });
+    } else {
+      newAccount = new Account({ username, password, role });
+    }
+
     // Encrypt password
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    // Create account
-    const newAccount = new Account({ username, password: hash, role })
+    // Save account
     await newAccount.save()
 
     // Remove password from response data
@@ -58,6 +73,3 @@ async function register(request, response, next) {
 }
 
 module.exports = register
-
-
-

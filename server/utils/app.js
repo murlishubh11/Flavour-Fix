@@ -4,9 +4,11 @@ const {ORIGIN} = require('../constants')
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const Preference = require('../models/Preference')
+const MenuItem = require('../models/MenuItem')
 const http = require('http');
 //const socketIO = require('socket.io');
 const {PORT} = require('../constants/index')
+const natural = require("natural");
 
 // initialize app
 const app = express()
@@ -28,7 +30,7 @@ const io = require('socket.io')(server, {
   }
 });
 
-// Event listener for socket connection
+
 io.on("connection", (socket) => {
   console.log("Client connected:", socket.id);
 
@@ -37,11 +39,10 @@ io.on("connection", (socket) => {
     // Update the preference data in the server
     // ...rest of the code
 
-    // Broadcast the updated preference data to all connected clients
     io.emit("preferenceUpdated", updatedPreference);
   });
 
-  // Clean up socket connection on socket disconnect
+ 
   socket.on("disconnect", () => {
     console.log("Client disconnected:", socket.id);
   });
@@ -66,7 +67,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true    }));
 app.use(express.static("public"));
 
-// error handling--------------------------------------
+
 app.use((err, req, res, next) => {
   console.error(err)
   res.status(500).send()
@@ -129,5 +130,61 @@ app.route("/preferences/:preferencePhonenumber")
   });
 
 
+  //______________________________________________________________
+ // ML implementation
+  //__________________________________________________________________
+  MenuItem.find({})
+  .then((menuItems) => {
+    const classifier = new natural.BayesClassifier();
 
+    menuItems.forEach((menuItem) => {
+      classifier.addDocument(menuItem.name, menuItem.category);
+      menuItem.tags.forEach((tag) => {
+        classifier.addDocument(tag, menuItem.category);
+      });
+    });
+
+    classifier.train();
+    console.log("Classifier trained with all menu items from the database");
+    app.route("/menuItems")
+    .post(async function(req, res){
+      
+      const feedback = req.body.feedback;
+    
+      // Get all the keywords in the user feedback
+      const tokenizer = new natural.WordTokenizer();
+      const keywords = tokenizer.tokenize(feedback);
+    
+      try {
+        const menuItems = await MenuItem.find({
+          $or: [
+            { category: { $in: keywords } },
+            { tags: { $in: keywords } }
+          ]
+        });
+    
+        res.json(menuItems);
+      } catch (err) {
+        console.error(err);
+        res.status(500).send("Server error");
+      }
+    });
+    
+  })
+  .catch((err) => console.error(err));
+
+// ___________________________________________________________
+
+app.route("/api/menu")
+  .get(function(req, res){
+  MenuItem.find({})
+    .then(menuItems => {
+      res.json(menuItems);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Server error');
+    });
+});
+//___________________________________
 module.exports = app
