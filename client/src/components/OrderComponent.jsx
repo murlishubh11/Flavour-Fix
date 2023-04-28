@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 
 const socket = io("http://localhost:8080");
 
-const OrderComponent = () => {
+const OrderComponent = (props) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [tips, setTips] = useState([]);
@@ -69,9 +69,10 @@ const OrderComponent = () => {
       items,
     };
   
+    
     // Emit the order to all connected clients through a socket event
     socket.emit('newOrder', order);
-  
+    props.setOrderData(order); 
     // Reset the form
     // handleReset();
     // alert('Order submitted!');

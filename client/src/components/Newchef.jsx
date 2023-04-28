@@ -11,6 +11,19 @@ const Newchef = (props) => {
   
       socket.on('orderBroadcast', (order) => {
         setOrders((prevOrders) => [...prevOrders, order]);
+        
+        const filteredItems = order.items.filter((item) => JSON.parse(item.item).type === cookstyle);
+        const items = filteredItems.map((item) => JSON.parse(item.item).name).join(', ');
+        const tips = order.tips.join(', ');
+      
+        // Generate speech synthesis
+        const speech = new SpeechSynthesisUtterance(`New order! Items: ${items}. Tips: ${tips}.`);
+        speech.lang = "en-US";
+        speech.volume = 1;
+        speech.rate = 1;
+        speech.pitch = 1;
+        window.speechSynthesis.speak(speech);
+        
       });
   
       return () => {

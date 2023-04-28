@@ -4,15 +4,24 @@ import { onNewScanResult } from "./ScanResultHandler.js";
 import ParentComponent from "./ParentComponent";
 import Menu from "./Menu";
 import OrderComponent from "./OrderComponent";
+import Billing from "./Billing";
+
 const restaurantTableImage = "https://img.freepik.com/premium-photo/restaurant-blur-background-design-resource_236836-16729.jpg"
 
 const Cashier = () => {
+
   const handleNewPreferenceData = (data) => {
     console.log("Preference Data:", data);
     setPreferenceData(data);
   };
 
   const [preferenceData, setPreferenceData] = useState(null);
+
+ 
+  // const handleOrderSubmit = (order) => {
+  //   setOrderData(order);
+  // };
+  const [orderData, setOrderData] = useState(null);
 
   return (
     <div
@@ -43,8 +52,13 @@ const Cashier = () => {
         <Menu/>
       </div>
       <div>
-        <OrderComponent/>
+      <OrderComponent setOrderData={setOrderData} />
+
+
       </div>
+      <div>
+               {orderData && <Billing orderData={orderData}/>}
+</div>
     </div>
   );
 };

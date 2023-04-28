@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import axios from "axios";
 
 function ReviewForm() {
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
   const [photo, setPhoto] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const handleReviewChange = (event) => {
     setReview(event.target.value);
@@ -17,16 +19,34 @@ function ReviewForm() {
     setPhoto(event.target.files[0]);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(`Review: ${review}`);
-    console.log(`Rating: ${rating}`);
-    console.log(`Photo: ${photo ? photo.name : 'none'}`);
-    // Here you would send the data to a server or do some other action with it
+    
+    const formData = new FormData();
+    formData.append('review', review);
+    formData.append('rating', rating);
+    formData.append('photo', photo);
+    formData.append('phoneNumber', phoneNumber);
+  
+    try {
+      const response = await axios.post('http://localhost:8080/api/reviews', formData);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+      <label className="block mb-4">
+  <span className="text-gray-700">Phone number:</span>
+  <input
+    type="text"
+    className="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+    value={phoneNumber}
+    onChange={(event) => setPhoneNumber(event.target.value)}
+  />
+</label>
       <label className="block mb-4">
         <span className="text-gray-700">Review:</span>
         <textarea

@@ -6,9 +6,11 @@ const ejs = require('ejs');
 const Preference = require('../models/Preference')
 const MenuItem = require('../models/MenuItem')
 const http = require('http');
+const multer = require('multer');
 //const socketIO = require('socket.io');
 const {PORT} = require('../constants/index')
 const natural = require("natural");
+const Review = require('../models/Review')
 
 // initialize app
 const app = express()
@@ -192,4 +194,34 @@ app.route("/api/menu")
     });
 });
 //___________________________________
+// Set up multer for handling file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({ storage: storage });
+
+// Handle form data
+app.post('/api/reviews', upload.single('photo'), async (req, res) => {
+  const { review, rating, phoneNumber } = req.body;
+  const photo = req.file ? req.file.path : null;
+
+  try {
+    const newReview = new Review({
+      review,
+      rating,
+      phoneNumber,
+      photo
+    });
+    await newReview.save();
+    res.status(201).json({ message: 'Review submitted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 module.exports = app
