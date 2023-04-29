@@ -32,7 +32,7 @@ const Cashier = () => {
       // }}
     >
       {/* Position Html5QrcodePlugin to left corner */}
-      {/* <div className="absolute top-20 left-20 mt-8 ml-8 z-10">
+      <div className="absolute top-20 left-20 mt-8 ml-8 z-10">
         <Html5QrcodePlugin
           fps={10}
           qrbox={250}
@@ -42,12 +42,12 @@ const Cashier = () => {
           }
           className="w-80"
         />
-      </div> */}
+      </div>
 
       {/* Position ParentComponent to right corner */}
-      {/* <div className="absolute top-0 right-20 mt-8 mr-8 z-10">
+      <div className="absolute top-0 right-20 mt-8 mr-8 z-10">
         <ParentComponent preferenceData={preferenceData} />
-      </div> */}
+      </div>
 
 <div><FeedbackForm/></div>
 

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import Chef from './Chef';
+
 
 const Newchef = (props) => {
     const { cookstyle } = props;
@@ -38,7 +40,10 @@ const Newchef = (props) => {
     };
   
     return (
+
+      
       <div className="container mx-auto my-8">
+        <div><Chef/></div>
         <h2 className="text-2xl font-semibold mb-4">New Orders</h2>
         <div className="grid grid-cols-3 gap-4">
           {orders.filter((order) => {
