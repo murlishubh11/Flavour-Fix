@@ -138,8 +138,7 @@ app.route("/preferences/:preferencePhonenumber")
 
 
   //______________________________________________________________
- // ML implementation
-  //__________________________________________________________________
+
   MenuItem.find({})
   .then((menuItems) => {
     const classifier = new natural.BayesClassifier();
@@ -158,7 +157,6 @@ app.route("/preferences/:preferencePhonenumber")
       
       const feedback = req.body.feedback;
     
-      // Get all the keywords in the user feedback
       const tokenizer = new natural.WordTokenizer();
       const keywords = tokenizer.tokenize(feedback);
     

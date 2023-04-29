@@ -9,11 +9,15 @@ import {
   ListSubheader,
   ListItemButton,
   Typography,
+  Button
 } from '@mui/material'
 import OnlineIndicator from './OnlineIndicator'
 import AuthModal from './AuthModal'
 import {useAuth} from '../contexts/AuthContext'
 import Html5QrcodePlugin from "html5-qrcode";
+
+import { Link } from 'react-router-dom';
+import ReviewForm from './ReviewForm';
 
 export default function Header() {
   const {isLoggedIn, account, logout} = useAuth()
@@ -22,6 +26,7 @@ export default function Header() {
   const [popover, setPopover] = useState(false)
   const [authModal, setAuthModal] = useState(false)
   const [register, setRegister] = useState(false)
+  const [showReviewForm, setShowReviewForm] = useState(false);
 
   const openPopover = (e) => {
     setPopover(true)
@@ -45,6 +50,10 @@ export default function Header() {
     closePopover()
   }
 
+  const toggleReviewForm = () => {
+    setShowReviewForm(prevState => !prevState);
+  }
+
   return (
     <AppBar className="header" position="static" style={{ background: '#2E3B55' }} >
     <Toolbar>
@@ -57,6 +66,8 @@ export default function Header() {
           <Avatar src={account?.username || ""} alt={account?.username || ""} />
         </OnlineIndicator>
       </IconButton>
+
+      <Button color="inherit" onClick={toggleReviewForm}>Reviews</Button>
 
       <Popover
         anchorEl={anchorEl}
@@ -87,6 +98,9 @@ export default function Header() {
         isRegisterMode={register}
         toggleRegister={() => setRegister((prev) => !prev)}
       />
+
+      {showReviewForm && <ReviewForm />}
+
     </Toolbar>
   </AppBar>
 

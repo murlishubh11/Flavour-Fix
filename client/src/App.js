@@ -48,6 +48,9 @@ const LoggedInText = () => {
 const LoggedOutText = () => {
   return (
     <>
+     <nav>
+     
+     </nav>
       <head>
         <title>Mr. Food</title>
       </head>

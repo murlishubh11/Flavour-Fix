@@ -6,6 +6,11 @@ function ReviewForm() {
   const [rating, setRating] = useState(0);
   const [photo, setPhoto] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleForm = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleReviewChange = (event) => {
     setReview(event.target.value);
@@ -37,6 +42,11 @@ function ReviewForm() {
   };
 
   return (
+    <>
+    <button onClick={toggleForm} className="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600">
+      {isOpen ? "Close Review Form" : "Give Review"}
+    </button>
+    {isOpen && (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-lg">
       <label className="block mb-4">
   <span className="text-gray-700">Phone number:</span>
@@ -85,7 +95,9 @@ function ReviewForm() {
         Submit
       </button>
     </form>
-  );
+ )}
+ </>
+);
 }
 
 export default ReviewForm;
