@@ -5,6 +5,7 @@ import ParentComponent from "./ParentComponent";
 import Menu from "./Menu";
 import OrderComponent from "./OrderComponent";
 import Billing from "./Billing";
+import FeedbackForm from "./FeedbackForm";
 
 const restaurantTableImage = "https://img.freepik.com/premium-photo/restaurant-blur-background-design-resource_236836-16729.jpg"
 
@@ -47,6 +48,8 @@ const Cashier = () => {
       {/* <div className="absolute top-0 right-20 mt-8 mr-8 z-10">
         <ParentComponent preferenceData={preferenceData} />
       </div> */}
+
+<div><FeedbackForm/></div>
 
 <div class="flex flex-wrap justify-center">
   <div class="w-full md:w-1/2 lg:w-1/3 p-2 z-10 ">
