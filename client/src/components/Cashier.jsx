@@ -31,8 +31,10 @@ const Cashier = () => {
       //   background: `url(${restaurantTableImage}) center/cover`, // Set the background image
       // }}
     >
+      <div>
+
       {/* Position Html5QrcodePlugin to left corner */}
-      <div className="absolute top-20 left-20 mt-8 ml-8 z-10">
+      {/* <div  className="absolute top-20 left-20 mt-8 ml-8 z-10">
         <Html5QrcodePlugin
           fps={10}
           qrbox={250}
@@ -42,22 +44,23 @@ const Cashier = () => {
           }
           className="w-80"
         />
-      </div>
+      </div> */}
 
       {/* Position ParentComponent to right corner */}
-      <div className="absolute top-0 right-20 mt-8 mr-8 z-10">
+      {/* <div className="absolute top-0 right-20 mt-8 mr-8 z-10">
         <ParentComponent preferenceData={preferenceData} />
+      </div> */}
       </div>
-
-<div><FeedbackForm/></div>
-
-<div class="flex flex-wrap justify-center">
-  <div class="w-full md:w-1/2 lg:w-1/3 p-2 z-10 ">
+      <div class="flex flex-wrap justify-center bg-blue-100 px-10">
+<div className=" bg-yellow-100 px-10">
+<FeedbackForm/>
+</div>
+<div className=" bg-blue-100 px-10">
     <Menu />
-  </div>
-  <div class="w-full md:w-1/2 lg:w-2/3 p-2 z-10">
-    <OrderComponent setOrderData={setOrderData} class="h-64 w-64" />
-  </div>
+    </div>
+    <div className=" bg-yellow-100 px-10">
+    <OrderComponent setOrderData={setOrderData}  />
+    </div>
 </div>
       <div>
                {orderData && <Billing orderData={orderData}/>}

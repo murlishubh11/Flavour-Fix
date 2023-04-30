@@ -191,6 +191,23 @@ app.route("/api/menu")
       res.status(500).send('Server error');
     });
 });
+// __________________________________________________________________________
+
+
+// Define an API endpoint to search for a menu item by name
+app.route("/api/menuitems")
+  .get( async function (req, res){
+  const name = req.query.name;
+  try {
+    
+    const menuItem = await MenuItem.findOne({ name: name });
+    res.json(menuItem); 
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
 //___________________________________
 // Set up multer for handling file uploads
 const storage = multer.diskStorage({

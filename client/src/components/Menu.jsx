@@ -28,8 +28,9 @@ class Menu extends React.Component {
   handleDragStart(event, menuItem) {
     // When starting to drag a menu item, set its data as a JSON object
     // on the drag event so that it can be dropped later
-    const data = JSON.stringify(menuItem);
-    event.dataTransfer.setData('text/plain', data);
+    
+    // const data = JSON.stringify(menuItem);
+    event.dataTransfer.setData('text/plain', menuItem.name);
   }
 
   render() {
@@ -48,8 +49,9 @@ class Menu extends React.Component {
     });
 
     return (
-      <div>
-        <div className="flex justify-center">
+      <div className='justify-center bg-pink-100 relative h-80 w-32' >
+         <div class="absolute h-14 w-14 -left-2 -top-0  " >
+        <div>
           <input
             type="text"
             placeholder="Search"
@@ -60,6 +62,7 @@ class Menu extends React.Component {
         </div>
 
         <div className="overflow-auto h-64">
+          
           <table className="table-auto w-1/4">
             <thead>
               <tr>
@@ -86,6 +89,7 @@ class Menu extends React.Component {
               ))}
             </tbody>
           </table>
+        </div>
         </div>
       </div>
     );

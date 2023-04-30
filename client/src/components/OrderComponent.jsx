@@ -31,11 +31,41 @@ const OrderComponent = (props) => {
     setTokenNo(e.target.value);
   };
 
-  const handleItemChange = (index, field, value) => {
+// Define a function to search for a menu item by name
+const searchMenuItemByName = async (name) => {
+  try {
+    const response = await fetch(`http://localhost:8080/api/menuitems?name=${name}`);
+    const menuItem = await response.json();
+    
+    const data = JSON.stringify(menuItem);
+    return data;
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
+const handleItemChange = async (index, field, value) => {
+  
+  
+  if (field === 'item') {
+    
+    const menuItem = await searchMenuItemByName(value);
+    
+   
+    if (menuItem) {
+      const newItems = [...items];
+      newItems[index][field] = menuItem;
+      setItems(newItems);
+    } else console.log('err')
+  } else {
     const newItems = [...items];
     newItems[index][field] = value;
     setItems(newItems);
-  };
+  }
+};
+
 
   const handleAddItem = () => {
     setItems([...items, { item: '', quantity: '' }]);
@@ -59,7 +89,7 @@ const OrderComponent = (props) => {
   const handleSubmit = (e) => {
 
     e.preventDefault();
-    
+    console.log(items);
     const order = {
       name,
       phoneNumber,

@@ -33,9 +33,9 @@ function FeedbackForm() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+    <div className="min-h-screen flex-col px-20 items-center bg-green-100">
       <form
-        className="max-w-md bg-white rounded-lg overflow-hidden shadow-lg p-8"
+        className="max-w-md rounded-lg my-10 overflow-hidden shadow-lg p-8 bg-white"
         onSubmit={handleSubmit}
       >
         <div className="mb-4">
@@ -64,8 +64,8 @@ function FeedbackForm() {
         </div>
       </form>
       {response && (
-  <div className="max-w-md bg-white rounded-lg overflow-hidden shadow-lg p-8 mt-4">
-    <table>
+  <div className="max-w-md  bg-white  rounded-lg overflow-hidden shadow-lg p-8 mt-4 ">
+    <table >
       <thead>
         <tr>
           <th>Name</th>
@@ -74,7 +74,8 @@ function FeedbackForm() {
           <th>Type</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody >
+        
         {response.map((menuItem) => (
           <tr key={menuItem._id}>
             <td>{menuItem.name}</td>

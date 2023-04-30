@@ -46,10 +46,16 @@ const Newchef = (props) => {
         <div><Chef/></div>
         <h2 className="text-2xl font-semibold mb-4">New Orders</h2>
         <div className="grid grid-cols-3 gap-4">
-          {orders.filter((order) => {
-            return order.items.some((item) => {
-              return JSON.parse(item.item).type === cookstyle;
-            });
+  {orders.filter((order) => {
+    return order.items.some((item) => {
+      if (item && item.item) {
+        const parsedItem = JSON.parse(item.item);
+        return parsedItem.type === cookstyle;
+      } else {
+        console.error('item is not defined or does not have item property');
+        return false;
+      }
+    });
           }).map((order, index) => (
             <div key={index} className="bg-white rounded-lg shadow-md p-4">
               <h3 className="text-lg font-medium mb-2">{order.name}</h3>
