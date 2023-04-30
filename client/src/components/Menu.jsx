@@ -49,28 +49,28 @@ class Menu extends React.Component {
     });
 
     return (
-      <div className='justify-center bg-pink-100 relative h-80 w-32' >
-         <div class="absolute h-14 w-14 -left-2 -top-0  " >
-        <div>
-          <input
-            type="text"
-            placeholder="Search"
-            className="border-2 border-gray-300 p-2 w-1/2"
-            value={searchQuery}
-            onChange={this.handleSearchChange}
-          />
-        </div>
+   
+    <div className='overflow-auto bg-pink-100 relative h-96 w-100'>
 
-        <div className="overflow-auto h-64">
-          
-          <table className="table-auto w-1/4">
+        <div>
+        <input
+  type="text"
+  placeholder="Search"
+  className="border-2 border-gray-300 p-2 w-50 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+  value={searchQuery}
+  onChange={this.handleSearchChange}
+/>
+
+        </div>
+        <div >
+          <table className="table-auto">
             <thead>
               <tr>
-                <th className="px-4 py-2">Number</th>
-                <th className="px-4 py-2">Name</th>
-                <th className="px-4 py-2">Price</th>
-                <th className="px-4 py-2">Category</th>
-                <th className="px-4 py-2">Type</th>
+                <th className="w-1/6 px-0 py-2">Number</th>
+                <th className="w-2/6 px-0 py-2">Name</th>
+                <th className="w-1/6 px-0 py-2">Price</th>
+                <th className="w-1/6 px-0 py-2">Category</th>
+                <th className="w-1/6 px-0 py-2">Type</th>
               </tr>
             </thead>
             <tbody>
@@ -80,18 +80,19 @@ class Menu extends React.Component {
                   draggable
                   onDragStart={(event) => this.handleDragStart(event, item)}
                 >
-                  <td className="border px-4 py-2">{index + 1}</td>
-                  <td className="border px-4 py-2">{item.name}</td>
-                  <td className="border px-4 py-2">{item.price}</td>
-                  <td className="border px-4 py-2">{item.category}</td>
-                  <td className="border px-4 py-2">{item.type}</td>
+                  <td className="border px-0 py-1">{index + 1}</td>
+                  <td className="border px-0 py-1">{item.name}</td>
+                  <td className="border px-0 py-1">{item.price}</td>
+                  <td className="border px-0 py-1">{item.category}</td>
+                  <td className="border px-0 py-1">{item.type}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        </div>
       </div>
+  
+    
     );
   }
 }

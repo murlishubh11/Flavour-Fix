@@ -17,65 +17,60 @@ const Cashier = () => {
   };
 
   const [preferenceData, setPreferenceData] = useState(null);
-
- 
-  // const handleOrderSubmit = (order) => {
-  //   setOrderData(order);
-  // };
+  const [showScanner, setShowScanner] = useState(false);
   const [orderData, setOrderData] = useState(null);
 
+  const toggleScanner = () => {
+    setShowScanner(!showScanner);
+  };
+
+  const slideDownStyles = {
+    marginTop: "500px", // Replace this with the height of your feedback and order components
+  };
+
   return (
-    <div
-      // className="min-h-screen flex flex-col items-center justify-center"
-      // style={{
-      //   background: `url(${restaurantTableImage}) center/cover`, // Set the background image
-      // }}
-    >
-      <div>
+    <div>
+     <button className="bg-rose-500 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded" onClick={toggleScanner}>
+  fetch
+</button>
 
-      {/* Position Html5QrcodePlugin to left corner */}
-      {/* <div  className="absolute top-20 left-20 mt-8 ml-8 z-10">
-        <Html5QrcodePlugin
-          fps={10}
-          qrbox={250}
-          disableFlip={false}
-          qrCodeSuccessCallback={(decodedText, decodedResult) =>
-            onNewScanResult(decodedText, decodedResult, handleNewPreferenceData)
-          }
-          className="w-80"
-        />
-      </div> */}
+      {showScanner && (
+        <div className="absolute top-20 left-20 mt-8 ml-8 z-10">
+          <Html5QrcodePlugin
+            fps={10}
+            qrbox={250}
+            disableFlip={false}
+            qrCodeSuccessCallback={(decodedText, decodedResult) =>
+              onNewScanResult(decodedText, decodedResult, handleNewPreferenceData)
+            }
+            className="w-80"
+          />
+        </div>
+      )}
+      {showScanner && (
+        <div className="absolute top-0 right-20 mt-8 mr-8 z-10">
+          <ParentComponent preferenceData={preferenceData} />
+        </div>
+      )}
+<div style={showScanner ? slideDownStyles : null}>
+  <div class="flex flex-wrap justify-between bg-blue-100 px-10">
+    <div class="w-1/3  bg-green-100 p-4">
+      <FeedbackForm />
+    </div>
+    <div class="w-1/3 bg-pink-100 p-4">
+      <Menu />
+    </div>
+    <div class="w-1/3 bg-yellow-100 p-4">
+      <OrderComponent setOrderData={setOrderData} />
+    </div>
+  </div>
 
-      {/* Position ParentComponent to right corner */}
-      {/* <div className="absolute top-0 right-20 mt-8 mr-8 z-10">
-        <ParentComponent preferenceData={preferenceData} />
-      </div> */}
-      </div>
-      <div class="flex flex-wrap justify-center bg-blue-100 px-10">
-<div className=" bg-yellow-100 px-10">
-<FeedbackForm/>
+  <div>
+    {orderData && <Billing orderData={orderData}/>}
+  </div>
 </div>
-<div className=" bg-blue-100 px-10">
-    <Menu />
-    </div>
-    <div className=" bg-yellow-100 px-10">
-    <OrderComponent setOrderData={setOrderData}  />
-    </div>
-</div>
-      <div>
-               {orderData && <Billing orderData={orderData}/>}
-</div>
+
     </div>
   );
 };
 export default Cashier;
-
-
-// I've used Tailwind CSS classes to style the Cashier component.
-//  I've applied a background color of bg-gray-100 to the parent div
-//   for a light gray background. I've used flexbox classes flex justify-center 
-//   items-center to center the Html5QrcodePlugin component vertically and horizontally
-//    within the parent div. I've also added margin top of mt-8 to center the ParentComponent
-//     component below the Html5QrcodePlugin component. Additionally, I've added w-80 class to
-//      the Html5QrcodePlugin component to set its width to 80% of its parent's width. 
-// You can adjust the classes according to your design requirements.

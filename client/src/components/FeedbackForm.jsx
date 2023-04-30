@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function FeedbackForm() {
   const [feedback, setFeedback] = useState("");
   const [response, setResponse] = useState("");
+  const [menuItems, setMenuItems] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,26 +15,31 @@ function FeedbackForm() {
       });
       const data = await res.json();
       console.log(data);
-      const menuItems = data.map((item) => ({
+      const items = data.map((item) => ({
+        _id: item._id,
         name: item.name,
         price: item.price,
         category: item.category,
         type: item.type,
       }));
-      setResponse(menuItems);
+      setResponse(items);
+      setMenuItems(items);
     } catch (err) {
       console.error(err);
       setResponse("Server error");
     }
   };
   
+  const handleDragStart = (event, menuItem) => {
+    event.dataTransfer.setData('text/plain', menuItem.name);
+  }
 
   const handleFeedbackChange = (e) => {
     setFeedback(e.target.value);
   };
 
   return (
-    <div className="min-h-screen flex-col px-20 items-center bg-green-100">
+    <div className="min-h-screen flex-col  items-center bg-green-100">
       <form
         className="max-w-md rounded-lg my-10 overflow-hidden shadow-lg p-8 bg-white"
         onSubmit={handleSubmit}
@@ -64,32 +70,33 @@ function FeedbackForm() {
         </div>
       </form>
       {response && (
-  <div className="max-w-md  bg-white  rounded-lg overflow-hidden shadow-lg p-8 mt-4 ">
-    <table >
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Category</th>
-          <th>Type</th>
-        </tr>
-      </thead>
-      <tbody >
-        
-        {response.map((menuItem) => (
-          <tr key={menuItem._id}>
-            <td>{menuItem.name}</td>
-            <td>{menuItem.price}</td>
-            <td>{menuItem.category}</td>
-            <td>{menuItem.type}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-)}
-
-
+        <div className="max-w-md  bg-white  rounded-lg overflow-hidden shadow-lg p-8 mt-4 ">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {menuItems.map((menuItem) => (
+                <tr
+                  key={menuItem._id}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, menuItem)}
+                >
+                  <td>{menuItem.name}</td>
+                  <td>{menuItem.price}</td>
+                  <td>{menuItem.category}</td>
+                  <td>{menuItem.type}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

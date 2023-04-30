@@ -55,7 +55,7 @@ const LoggedOutText = () => {
         <title>Mr. Food</title>
       </head>
       <body className="bg-gray-100">
-        <div><Cashier/></div>
+        
         <div className="min-h-screen flex items-center justify-center">
           <div className="bg-white rounded-lg p-12 max-w-md w-full mx-4">
             <h1 className="text-4xl font-bold mb-6">Welcome to Mr. Food</h1>
