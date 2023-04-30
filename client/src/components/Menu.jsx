@@ -50,7 +50,7 @@ class Menu extends React.Component {
 
     return (
    
-    <div className='overflow-auto text-gray rounded-2xl bg-white px-5 py-5 relative h-96 w-100'>
+    <div className='overflow-auto text-gray rounded-2xl text-white px-5 py-5 relative h-96 w-100'>
 
         <div className='py-5'>
         <input

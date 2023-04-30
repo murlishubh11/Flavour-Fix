@@ -49,7 +49,7 @@ function FeedbackForm() {
             className="block text-gray-700 font-bold mb-2"
             htmlFor="feedback"
           >
-            Preferences
+            Preference
           </label>
           <textarea
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -69,8 +69,8 @@ function FeedbackForm() {
           </button>
         </div>
       </form>
-      {response && (
-        <div className="max-w-md  bg-white  rounded-lg overflow-hidden shadow-lg p-8 mt-4 ">
+      {response && ( 
+        <div className="max-w-md   rounded-lg overflow-hidden shadow-lg p-8 mt-4 ">
           <table>
             <thead>
               <tr>
@@ -81,6 +81,7 @@ function FeedbackForm() {
               </tr>
             </thead>
             <tbody>
+              {console.log(menuItems)}
               {menuItems.map((menuItem) => (
                 <tr
                   key={menuItem._id}
