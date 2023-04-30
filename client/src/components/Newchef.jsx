@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import Chef from './Chef';
+import backgroundImage from '../img/chef.jpg'
 
 const Newchef = (props) => {
   const { cookstyle } = props;
@@ -39,10 +40,15 @@ const Newchef = (props) => {
   };
 
   return (
-    <div className="container mx-auto my-8">
+    
+      <div 
+className="relative  bg-cover bg-no-repeat  mx-auto "
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+          >
       {/* Add the button to toggle Chef component */}
+      
       <button
-  className="px-4 py-2 font-medium text-white bg-amber-500 rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+  className="px-4 py-4 font-medium text-slate-500 bg-slate-900 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
   onClick={() => setDisplayChef(!displayChef)}
 >
   {displayChef ? "Hide Chef" : "Show Chef"}

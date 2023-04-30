@@ -3,6 +3,8 @@ import { Dialog, DialogTitle, TextField, Button, CircularProgress, FormControl, 
 import { useAuth } from '../contexts/AuthContext';
 
 const textFieldSx = { mx: 2, my: 0.5 };
+const radioSx = { color: 'purple' };
+const buttonSx = { backgroundColor: 'blueviolet', color: 'white', '&:hover': { backgroundColor: 'purple' } };
 
 export default function AuthModal({ open, close, isRegisterMode, toggleRegister }) {
   const { login, register } = useAuth();
@@ -58,21 +60,23 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
           <Fragment>
           <RegisterForm formData={formData} handleChange={handleChange} />
           <FormControl component="fieldset" sx={{ mt: 2 }}>
-            <FormLabel component="legend">Role</FormLabel>
+            <FormLabel component="legend" sx={{ color: 'blueviolet' }}>Role</FormLabel>
             <RadioGroup row aria-label="role" name="role" value={selectedRole} onChange={handleRoleChange}>
-              <FormControlLabel value="user" control={<Radio />} label="User" />
-              <FormControlLabel value="admin" control={<Radio />} label="admin" />
+              <FormControlLabel value="user" control={<Radio sx={radioSx} />} label="User" />
+              <FormControlLabel value="admin" control={<Radio sx={radioSx} />} label="admin" />
             </RadioGroup>
           </FormControl>
           {selectedRole === 'user' && (
+            <div className="text-2xl bg-amber-200 px-2 py-2 font-bold mb-4">
             <FormControl component="fieldset" sx={{ mt: 2 }}>
-              <FormLabel component="legend">Cook Style</FormLabel>
+              <FormLabel component="legend" sx={{ color: 'blueviolet' }}>Cook Style</FormLabel>
               <RadioGroup row aria-label="cookstyle" name="cookstyle" value={selectedCookStyle} onChange={handleCookStyleChange}>
-                <FormControlLabel value="Indian" control={<Radio />} label="Indian" />
-                <FormControlLabel value="Chinese" control={<Radio />} label="Chinese" />
-                <FormControlLabel value="Italian" control={<Radio />} label="Italian" />
+                <FormControlLabel value="Indian" control={<Radio sx={radioSx} />} label="Indian" />
+                <FormControlLabel value="Chinese" control={<Radio sx={radioSx} />} label="Chinese" />
+                <FormControlLabel value="Italian" control={<Radio sx={radioSx} />} label="Italian" />
               </RadioGroup>
             </FormControl>
+            </div>
           )}
         </Fragment>
       ) : (
@@ -86,7 +90,7 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
           <CircularProgress color="inherit" />
         </center>
       ) : (
-        <Button
+        <Button class="hover:bg-blue-200  px-2 py-2 cursor-pointer  "
           onClick={clickSubmit}
           disabled={isRegisterMode ? disabledRegisterButton : disabledLoginButton}
         >
@@ -104,10 +108,10 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
 
 /////////////////////////////////////////////////////////////////////////
 
-function LoginForm({formData, handleChange}) {
+function LoginForm({ formData, handleChange }) {
   return (
     <Fragment>
-      <DialogTitle>Login to your account</DialogTitle>
+      <DialogTitle className="text-2xl  font-bold bg-slate-400 text-gray-800 mb-4">Login to your account</DialogTitle>
 
       <TextField
         label='Username'
@@ -116,7 +120,7 @@ function LoginForm({formData, handleChange}) {
         value={formData['username'] || ''}
         onChange={handleChange}
         variant='filled'
-        sx={textFieldSx}
+        className=" text-gray-800 rounded-lg mb-4 px-4 py-2 w-full"
         required
       />
       <TextField
@@ -126,17 +130,18 @@ function LoginForm({formData, handleChange}) {
         value={formData['password'] || ''}
         onChange={handleChange}
         variant='filled'
-        sx={textFieldSx}
+        className="  rounded-lg mb-4 px-4 py-2 w-full"
         required
       />
     </Fragment>
   )
 }
 /////////////////////////////////////////////////////////////////
-function RegisterForm({formData, handleChange}) {
+function RegisterForm({ formData, handleChange }) {
   return (
+    <div className="text-2xl bg-amber-200 px-2 py-2 font-bold mb-4"> 
     <Fragment>
-      <DialogTitle>Create a new account</DialogTitle>
+      <DialogTitle className="text-2xl font-bold text-gray-800 mb-4">Create a new account</DialogTitle>
 
       <TextField
         label='Username'
@@ -145,7 +150,7 @@ function RegisterForm({formData, handleChange}) {
         value={formData['username'] || ''}
         onChange={handleChange}
         variant='filled'
-        sx={textFieldSx}
+        className="bg-blue-200 text-gray-800 rounded-lg mb-4 px-4 py-2 w-full"
         required
       />
       <TextField
@@ -155,9 +160,10 @@ function RegisterForm({formData, handleChange}) {
         value={formData['password'] || ''}
         onChange={handleChange}
         variant='filled'
-        sx={textFieldSx}
+        className="bg-blue-200 text-gray-800 rounded-lg mb-4 px-4 py-2 w-full"
         required
       />
     </Fragment>
+    </div>
   )
 }

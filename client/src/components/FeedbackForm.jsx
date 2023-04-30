@@ -39,7 +39,7 @@ function FeedbackForm() {
   };
 
   return (
-    <div className="min-h-screen flex-col  items-center bg-green-100">
+    <div className="min-h-screen flex-col  items-center text-white ">
       <form
         className="max-w-md rounded-lg my-10 overflow-hidden shadow-lg p-8 bg-white"
         onSubmit={handleSubmit}
@@ -49,7 +49,7 @@ function FeedbackForm() {
             className="block text-gray-700 font-bold mb-2"
             htmlFor="feedback"
           >
-            Feedback
+            Preferences
           </label>
           <textarea
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

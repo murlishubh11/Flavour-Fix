@@ -6,6 +6,7 @@ import Menu from "./Menu";
 import OrderComponent from "./OrderComponent";
 import Billing from "./Billing";
 import FeedbackForm from "./FeedbackForm";
+import backgroundImage from "../img/login.jpg"
 
 const restaurantTableImage = "https://img.freepik.com/premium-photo/restaurant-blur-background-design-resource_236836-16729.jpg"
 
@@ -26,16 +27,17 @@ const Cashier = () => {
 
   const slideDownStyles = {
     marginTop: "500px", // Replace this with the height of your feedback and order components
+  
   };
 
   return (
-    <div>
+    <div className="bg-slate-700">
      <button className="bg-rose-500 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded" onClick={toggleScanner}>
   fetch
 </button>
 
       {showScanner && (
-        <div className="absolute top-20 left-20 mt-8 ml-8 z-10">
+        <div className="absolute top-20 left-20 mt-8 ml-8  z-10">
           <Html5QrcodePlugin
             fps={10}
             qrbox={250}
@@ -52,15 +54,29 @@ const Cashier = () => {
           <ParentComponent preferenceData={preferenceData} />
         </div>
       )}
-<div style={showScanner ? slideDownStyles : null}>
-  <div class="flex flex-wrap justify-between bg-blue-100 px-10">
-    <div class="w-1/3  bg-green-100 p-4">
+
+
+
+
+
+
+
+
+
+<div style={showScanner ? slideDownStyles : null} >
+
+  <div 
+className="relative overflow-hidde bg-cover bg-no-repeat flex flex-wrap justify-between  px-10"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+          >
+ <div class="absolute inset-0 bg-slate-900 opacity-60 z-10 shadow-md"></div>
+    <div class="w-1/3  relative z-10  p-4">
       <FeedbackForm />
     </div>
-    <div class="w-1/3 bg-pink-100 p-4">
+    <div class="w-1/3 relative z-10  py-10">
       <Menu />
     </div>
-    <div class="w-1/3 bg-yellow-100 p-4">
+    <div class="w-1/3  relative  z-10  py-10  ">
       <OrderComponent setOrderData={setOrderData} />
     </div>
   </div>

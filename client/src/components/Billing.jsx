@@ -4,8 +4,8 @@ const Billing = ({ orderData }) => {
   const { name, phoneNumber, tableNo, tokenNo, items } = orderData;
 
   return (
-    <div className="max-w-xl mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4">Billing Information</h2>
+    <div className="max-w-xl mx-auto mt-8 border border-white rounded p-4">
+      <h2 className="text-2xl font-bold mb-4 text-white">Billing Information</h2>
       <div className="bg-gray-100 p-4 rounded-md mb-4">
         <p className="font-bold mb-2">Customer Name: {name}</p>
         <p className="font-bold mb-2">Phone Number: {phoneNumber}</p>
@@ -13,7 +13,7 @@ const Billing = ({ orderData }) => {
         <p className="font-bold mb-2">Token Number: {tokenNo}</p>
       </div>
       <div>
-        <h3 className="text-lg font-bold mb-2">Items Ordered</h3>
+        <h3 className="text-lg font-bold mb-2 text-white">Items Ordered</h3>
         <table className="w-full">
           <thead>
             <tr>
@@ -25,10 +25,10 @@ const Billing = ({ orderData }) => {
             {items &&
               items.map((item, index) => (
                 <tr key={index}>
-                  <td className="border px-4 py-2">{JSON.parse(item.item).name} &nbsp;&nbsp;
+                  <td className="border px-4 py-2 text-white">{JSON.parse(item.item).name} &nbsp;&nbsp;
                   {JSON.parse(item.item).type}&nbsp;&nbsp;
 {JSON.parse(item.item).price}</td>
-                  <td className="border px-4 py-2">{item.quantity}</td>
+                  <td className="border px-4 py-2 text-white">{item.quantity}</td>
                 </tr>
               ))}
           </tbody>

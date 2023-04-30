@@ -109,8 +109,8 @@ const handleItemChange = async (index, field, value) => {
   };
 
   return (
-    <div className=' flex justify-center w-1/4 mx-auto h-1/4'>
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-8">
+    <div class=' border border-gray-900 p-4 rounded-2xl ml-10 bg-white '>
+    <form onSubmit={handleSubmit} className=" mx-auto mt-8 resize-none hover:resize">
       <div className="mb-4">
         <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
           Name
@@ -176,6 +176,12 @@ const handleItemChange = async (index, field, value) => {
             ))}
           </tbody>
         </table>
+        
+        <div className="mt-4">
+          <button type="button" onClick={handleAddItem} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Add Item
+          </button>
+        </div>
       <div className="mb-4">
         <label htmlFor="tips" className="block text-gray-700 font-bold mb-2">
           Tips (separate with comma)
@@ -216,11 +222,6 @@ const handleItemChange = async (index, field, value) => {
         />
       </div>
       
-        <div className="mt-4">
-          <button type="button" onClick={handleAddItem} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Add Item
-          </button>
-        </div>
       </div>
 
       <button type="button" onClick={handleReset} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
