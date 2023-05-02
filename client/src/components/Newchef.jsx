@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import Chef from './Chef';
-import backgroundImage from '../img/chef.jpg'
+import backgroundImage from '../img/login.jpg'
 
 const Newchef = (props) => {
   const { cookstyle } = props;
@@ -10,16 +10,42 @@ const Newchef = (props) => {
   const [speechCount, setSpeechCount] = useState(0);
   const [displayChef, setDisplayChef] = useState(false); // add new state variable
 
+  const searchMenuItemByName = async (nameArray) => {
+    try {
+      const promises = nameArray.map(async (name) => {
+        const response = await fetch(`http://localhost:8080/api/menuitems?name=${name}`);
+        const menuItem = await response.json();
+        return JSON.stringify(menuItem);
+      });
+      const results = await Promise.all(promises);
+      return results;
+      
+    } catch (err) {
+      console.error(err);
+    }
+  };
   useEffect(() => {
     const socket = io("http://localhost:8080");
-
-    socket.on('orderBroadcast', (order) => {
+  
+    const handleOrderBroadcast = async (order) => {
+      const data = order.items.map(item => item.item);
+      const stringArray = data.join(",").split(",");
+      console.log(stringArray);
+  
+      const menuItems = await searchMenuItemByName(stringArray);
+  
+      order.items.forEach((item, index) => {
+        item.item = menuItems[index];
+      });
+  
+      console.log(order.items);
+  
       setOrders((prevOrders) => [...prevOrders, order]);
-
+  
       const filteredItems = order.items.filter((item) => JSON.parse(item.item).type === cookstyle);
       const items = filteredItems.map((item) => JSON.parse(item.item).name).join(', ');
       const tips = order.tips.join(', ');
-
+  
       // Generate speech synthesis
       const speech = new SpeechSynthesisUtterance(`New order! Items: ${items}. Tips: ${tips}.`);
       speech.lang = "en-US";
@@ -27,12 +53,15 @@ const Newchef = (props) => {
       speech.rate = 1;
       speech.pitch = 1;
       window.speechSynthesis.speak(speech);
-    });
-
+    };
+  
+    socket.on('orderBroadcast', handleOrderBroadcast);
+  
     return () => {
-      socket.off("orderBroadcast");
+      socket.off("orderBroadcast", handleOrderBroadcast);
     };
   }, []);
+  
 
   const handleDeleteOrder = (orderToDelete) => {
     setOrders(prevOrders => prevOrders.filter(order => order !== orderToDelete));
@@ -41,14 +70,11 @@ const Newchef = (props) => {
 
   return (
     
-      <div 
-className="relative  bg-cover bg-no-repeat  mx-auto "
-          style={{ backgroundImage: `url(${backgroundImage})` }}
-          >
-      {/* Add the button to toggle Chef component */}
-      
+      <div   className='bg-inheirt  bg-slate-500'>
+    
+      <div className='p-1 bg-inherit'>
       <button
-  className="px-4 py-4 font-medium text-slate-500 bg-slate-900 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+  className="p-2 font-sm bg-inherit rounded  text-white  focus:outline-none "
   onClick={() => setDisplayChef(!displayChef)}
 >
   {displayChef ? "Hide Chef" : "Show Chef"}
@@ -56,8 +82,14 @@ className="relative  bg-cover bg-no-repeat  mx-auto "
 
       {/* Render Chef component if displayChef is true */}
       {displayChef && <Chef />}
-        <h2 className="text-2xl font-semibold mb-4">New Orders</h2>
-        <div className="grid grid-cols-3 gap-4">
+      </div>
+      <div 
+className="relative  bg-cover bg-no-repeat mx-auto bg-slate-500 bg-opacity-50"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+          >
+        {/* <h2 className="text-2xl p-5 font-semibold  text-slate-300  bg-slate-500 bg-opacity-50 "></h2> */}
+        
+        <div className="grid grid-cols-3 gap-4 bg-inherit ">
   {orders.filter((order) => {
     return order.items.some((item) => {
       if (item && item.item) {
@@ -69,26 +101,26 @@ className="relative  bg-cover bg-no-repeat  mx-auto "
       }
     });
           }).map((order, index) => (
-            <div key={index} className="bg-red-100 rounded-lg shadow-2xl p-4">
-              <h3 className="text-lg font-medium mb-2">{order.name}</h3>
-              <p className="text-gray-700 text-sm mb-1">
+            <div key={index} className=" bg-slate-900 bg-opacity-80 border border-black rounded-lg shadow-2xl p-4 relative z-10">
+              <h3 className="text-lg text-white  font-bold  mb-2">{order.name}</h3>
+              <p className="text-white text-sm mb-1">
                 Phone Number: {order.phoneNumber}
               </p>
-              <p className="text-gray-700 text-sm mb-1">
+              <p className="text-white  text-sm mb-1">
                 Table No: {order.tableNo}
               </p>
-              <p className="text-gray-700 text-sm mb-1">
+              <p className="text-white  text-sm mb-1">
                 Token No: {order.tokenNo}
               </p>
              
               <ul className="list-disc ml-4">
               <table className="w-full text-sm mt-4">
-              <div className="text-2xl bg-red-200 p-4 rounded-lg my-4">
+              <div className="text-2xl bg-inherit p-4 rounded-lg my-4">
   <table>
     <thead>
       <tr>
-        <th className="text-gray-700">Items</th>
-        <th className="text-gray-700">Tips</th>
+        <th className="text-white">Items</th>
+        <th className="text-white">Tips</th>
       </tr>
     </thead>
     <tbody>
@@ -101,7 +133,7 @@ className="relative  bg-cover bg-no-repeat  mx-auto "
                 const itemType = JSON.parse(item.item).type;
                 const itemQuantity = item.quantity;
                 return (
-                  <li key={index} className="text-lg text-gray-700">
+                  <li key={index} className="text-lg relative z-10 text-white">
                     {itemName} <span>-</span>{itemType}<span>-Quantity-</span>({itemQuantity})<span>Kg</span>
                   </li>
                 );
@@ -109,7 +141,7 @@ className="relative  bg-cover bg-no-repeat  mx-auto "
           </ul>
         </td>
         <td className="p-4">
-          <div className="bg-red-300 rounded-lg p-4 text-grey">
+          <div className="bg-slate-300 realative z-10  rounded-lg p-4 text-grey">
             {order.tips.map((tip, index) => (
               <div key={index} className="mb-2">
                 {tip}
@@ -127,9 +159,10 @@ className="relative  bg-cover bg-no-repeat  mx-auto "
 
               </ul>
             
-              <button onClick={() => handleDeleteOrder(order)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2">
+              <button onClick={() => handleDeleteOrder(order)} className="bg-slate-700 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded mt-2">
                 Delete Order
               </button>
+              <span className='px-20'></span>
               <button onClick={() => {
   const filteredItems = order.items.filter((item) => JSON.parse(item.item).type === cookstyle);
   const items = filteredItems.map((item) => JSON.parse(item.item).name).join(', ');
@@ -142,12 +175,16 @@ className="relative  bg-cover bg-no-repeat  mx-auto "
   speech.pitch = 1;
   window.speechSynthesis.speak(speech);
   setSpeechCount(count => count + 1);
-}} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">
+}} className="bg-slate-700 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded mt-2">
   Repeat Speech
 </button>
             </div>
           ))}
         </div>
+        <div className=' bg-inherit h-96  bg-slate-900 bg-opacity-50' > </div>
+        <div className=' bg-inherit h-96  bg-slate-900 bg-opacity-50' > </div>
+        
+      </div>
       </div>
     );
   };

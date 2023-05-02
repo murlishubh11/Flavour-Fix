@@ -32,7 +32,7 @@ const Cashier = () => {
 
   return (
     <div className="bg-slate-700">
-     <button className="bg-rose-500 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded" onClick={toggleScanner}>
+     <button className="bg-inherit text-white font-bold py-2 px-4 rounded" onClick={toggleScanner}>
   fetch
 </button>
 
@@ -81,7 +81,7 @@ className="relative overflow-hidde bg-cover bg-no-repeat flex flex-wrap justify-
     </div>
   </div>
 
-  <div>
+  <div className="bg-inherit">
     {orderData && <Billing orderData={orderData}/>}
   </div>
 </div>

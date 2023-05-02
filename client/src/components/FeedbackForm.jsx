@@ -39,20 +39,20 @@ function FeedbackForm() {
   };
 
   return (
-    <div className="min-h-screen flex-col  items-center text-white ">
+    <div className="min-h-screen flex-col  items-center color='inherit' text-white ">
       <form
-        className="max-w-md rounded-lg my-10 overflow-hidden shadow-lg p-8 bg-white"
+        className="max-w-md rounded-lg my-10 overflow-hidden shadow-lg p-8 bg-inherit"
         onSubmit={handleSubmit}
       >
         <div className="mb-4">
           <label
-            className="block text-gray-700 font-bold mb-2"
+            className="block text-white font-bold mb-2"
             htmlFor="feedback"
           >
             Preference
           </label>
           <textarea
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded bg-inherit w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
             id="feedback"
             value={feedback}
             onChange={handleFeedbackChange}

@@ -37,11 +37,8 @@ const Chef = () => {
   };
   return (
     <div
-      className="bg-gradient-to-r from-blue-500 to-indigo-500 min-h-screen bg-fixed bg-center bg-cover"
-      style={{
-        backgroundImage:
-          "url('https://media.istockphoto.com/id/1130714046/photo/empty-dark-wooden-table-in-front-of-abstract-blurred-bokeh-background-of-restaurant-can-be.jpg?s=612x612&w=0&k=20&c=9ywAfpo4Gw3uqPs7-Jxo5ZJj06-B2YOvoKGGktRKx6E=')"
-      }}
+      className="bg-gradient-to-r bg-inherit min-h-screen bg-fixed bg-center bg-cover"
+  
     >
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-white mb-8">Orders</h1>

@@ -56,7 +56,7 @@ class Menu extends React.Component {
         <input
   type="text"
   placeholder="Search"
-  className="border-2 border-gray-300 p-2 w-80 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+  className="border-2 border-gray-300 bg-inherit p-2 w-80 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
   value={searchQuery}
   onChange={this.handleSearchChange}
 />

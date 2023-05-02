@@ -8,3 +8,18 @@
     --online:green;
 }
 
+.overflow-auto::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  
+.overflow-auto::-webkit-scrollbar-thumb {
+    background-color: #6B7280;
+    border-radius: 9999px;
+  }
+  
+.overflow-auto::-webkit-scrollbar-track {
+    background-color: #F9FAFB;
+    border-radius: 9999px;
+  }
+  

@@ -102,12 +102,12 @@ const handleTipsChange = (e) => {
     
     <form
     onSubmit={handleSubmit}
-    className="max-w-sm mx-auto mt-10 p-4 bg-white rounded-lg shadow-md"
+    className="max-w-sm mx-auto mt-10 p-4 bg-inherit border border-white rounded-lg shadow-md"
   >
     <h2 className="text-2xl font-bold mb-4">Update Preferences</h2>
     <div className="flex flex-wrap -mx-2 mb-4">
       <div className="w-full md:w-1/2 px-2 mb-4">
-        <label htmlFor="name" className="block mb-2">
+        <label htmlFor="name" className="block text-white mb-2">
           Name:
         </label>
         <input
@@ -116,11 +116,11 @@ const handleTipsChange = (e) => {
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 bg-inherit focus:ring-blue-400"
         />
       </div>
       <div className="w-full md:w-1/2 px-2 mb-4">
-        <label htmlFor="phone" className="block mb-2">
+        <label htmlFor="phone" className="block text-white mb-2">
           Phone:
         </label>
         <input
@@ -129,14 +129,14 @@ const handleTipsChange = (e) => {
           name="phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full px-4 py-2 rounded-lg border focus:outline-none bg-inherit focus:ring-2 focus:ring-blue-400"
         />
       </div>
     </div>
   
     <div className="flex flex-wrap -mx-2 mb-4">
       <div className="w-full md:w-1/2 px-2 mb-4">
-        <label htmlFor="tips" className="block mb-2">
+        <label htmlFor="tips" className="block  text-white mb-2">
           Tips:
         </label>
         <input
@@ -145,11 +145,11 @@ const handleTipsChange = (e) => {
           name="tips"
           value={tips}
           onChange={handleTipsChange}
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full px-4 py-2 rounded-lg border focus:outline-none  bg-inherit focus:ring-2 focus:ring-blue-400"
         />
       </div>
       <div className="w-full md:w-1/2 px-2 mb-4">
-        <label htmlFor="items" className="block mb-2">
+        <label htmlFor="items" className="block text-white mb-2">
           Items:
         </label>
         <input
@@ -158,7 +158,7 @@ const handleTipsChange = (e) => {
           name="items"
           value={items.join(", ")}
           onChange={handleItemsChange}
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none
+          className="w-full px-4 py-2 rounded-lg border  bg-inherit focus:outline-none
           focus:ring-2 focus:ring-blue-400"
         />
       </div>
@@ -166,7 +166,7 @@ const handleTipsChange = (e) => {
   
     <div className="flex flex-wrap -mx-2 mb-4">
       <div className="w-full md:w-1/2 px-2 mb-4">
-        <label htmlFor="tokenNo" className="block mb-2">
+        <label htmlFor="tokenNo" className="block text-white mb-2">
           Token No:
         </label>
         <input
@@ -175,12 +175,12 @@ const handleTipsChange = (e) => {
           name="tokenNo"
           value={tokenNo}
           onChange={(e) => setTokenNo(e.target.value)}
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none
+          className="w-full px-4 py-2 rounded-lg border bg-inherit focus:outline-none
           focus:ring-2 focus:ring-blue-400"
         />
       </div>
       <div className="w-full md:w-1/2 px-2 mb-4">
-        <label htmlFor="tableNo" className="block mb-2">
+        <label htmlFor="tableNo" className="block text-white mb-2">
           Table No:
         </label>
         <input
@@ -189,7 +189,7 @@ const handleTipsChange = (e) => {
           name="tableNo"
           value={tableNo}
           onChange={(e) => setTableNo(e.target.value)}
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full px-4 py-2 rounded-lg border  bg-inherit focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
     </div>
@@ -197,14 +197,14 @@ const handleTipsChange = (e) => {
     <div className="flex justify-between mt-6">
     <button
       type="submit"
-      className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+      className="w-full   text-white py-2 px-4 border border-white rounded-md bg-inherit hover:bg-blue-600 transition duration-300"
     >
      Update
     </button>
     <button
       type="button"
       onClick={handleClearFormFields}
-      className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors duration-300"
+      className=" text-white-700 px-4 py-2  bg-inherit rounded-md hover:bg-gray-300 transition-colors duration-300"
     >
       Clear
     </button>
