@@ -55,8 +55,10 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
   const disabledRegisterButton = !formData['username'] || !formData['password'] || (selectedRole === 'user' && !selectedCookStyle);
 
   return (
+    
     <Dialog open={open} onClose={close}>
       {isRegisterMode ? (
+        <div class="rounded p-1 bg-slate-300 ">
           <Fragment>
           <RegisterForm formData={formData} handleChange={handleChange} />
           <FormControl component="fieldset" sx={{ mt: 2 }}>
@@ -67,7 +69,7 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
             </RadioGroup>
           </FormControl>
           {selectedRole === 'user' && (
-            <div className="text-2xl bg-amber-200 px-2 py-2 font-bold mb-4">
+            <div className="text-2xl  bg-slate-300 px-2 py-2 rounded font-bold mb-4">
             <FormControl component="fieldset" sx={{ mt: 2 }}>
               <FormLabel component="legend" sx={{ color: 'blueviolet' }}>Cook Style</FormLabel>
               <RadioGroup row aria-label="cookstyle" name="cookstyle" value={selectedCookStyle} onChange={handleCookStyleChange}>
@@ -79,6 +81,7 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
             </div>
           )}
         </Fragment>
+        </div>
       ) : (
         <LoginForm formData={formData} handleChange={handleChange} />
       )}
@@ -102,6 +105,7 @@ export default function AuthModal({ open, close, isRegisterMode, toggleRegister 
         {isRegisterMode ? 'I already have an account' : "I don't have an account"}
       </Button>
     </Dialog>
+   
   );
 }
 
@@ -139,9 +143,9 @@ function LoginForm({ formData, handleChange }) {
 /////////////////////////////////////////////////////////////////
 function RegisterForm({ formData, handleChange }) {
   return (
-    <div className="text-2xl bg-amber-200 px-2 py-2 font-bold mb-4"> 
+    <div className="text-2xl bg-slate-700 px-2 py-2 rounded font-bold mb-4"> 
     <Fragment>
-      <DialogTitle className="text-2xl font-bold text-gray-800 mb-4">Create a new account</DialogTitle>
+      <DialogTitle className="text-2xl font-bold text-gray-500 mb-4">Create a new account</DialogTitle>
 
       <TextField
         label='Username'
