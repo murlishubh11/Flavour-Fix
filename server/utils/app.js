@@ -11,6 +11,16 @@ const multer = require('multer');
 const {PORT} = require('../constants/index')
 const natural = require("natural");
 const Review = require('../models/Review')
+//------------------------------------------------------new ones
+
+
+const Profile = require('../profile'); 
+const { spawn } = require('child_process');
+
+
+
+
+
 
 // initialize app
 const app = express()
@@ -71,6 +81,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true    }));
 app.use(express.static("public"));
 
@@ -80,6 +91,54 @@ app.use((err, req, res, next) => {
   res.status(500).send()
   next()
 })
+
+//==============================================connect to sql
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'Nnr15823@ms',
+  database: 'recommendation_system',
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+    return;
+  }
+  console.log('Connected to the database!');
+});
+//---------------------------------------------------
+
+const createProfile = async (req, res) => {
+  try {
+    const { name, email, number, gender, age, blood, weight, height, favfood, foodtype, diet, nutrient, disease, cuisines, medicalhistory, image } = req.body;
+    const profile = await Profile.create({
+      name,
+      email,
+      number,
+      gender,
+      age,
+      blood,
+      weight,
+      height,
+      favfood,
+      foodtype,
+      diet,
+      nutrient,
+      disease,
+      cuisines,
+      medicalhistory,
+      image
+    });
+    res.status(201).json(profile);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+app.post('/profiles', createProfile);
+//==========================================================================
 
 //--------------------------------------------------------------------------------------------------
 
@@ -239,4 +298,79 @@ app.post('/api/reviews', upload.single('photo'), async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// new ml implementations ---- python as child process 
+
+
+app.post('/recommend', (req, res) => {
+  const username = req.body.username;
+
+  // Spawn the Python script as a child process
+  const pythonProcess = spawn('python', ['recommendation.py']);
+
+  let outputData = '';
+
+  // Send the username to the Python script through stdin
+  pythonProcess.stdin.write(username);
+  pythonProcess.stdin.end();
+
+  pythonProcess.stdout.on('data', (data) => {
+    // Append the output from the Python script to the outputData variable
+    const output = data.toString().trim();
+    outputData += output;
+  });
+
+  pythonProcess.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  pythonProcess.on('exit', (code) => {
+    console.log(`Child process exited with code ${code}`);
+
+    // Process the captured output
+    console.log("Recommendation Results:");
+    console.log(outputData);
+
+    // Send the output as the response
+    res.send(outputData);
+  });
+});
+ 
+
+app.post('/srecommend', (req, res) => {
+  const userid = req.body.userid;
+
+  // Spawn the Python script as a child process
+  const pythonProcess = spawn('python', ['SecondRecommendation.py']);
+
+  let outputData = '';
+
+  // Send the username to the Python script through stdin
+  pythonProcess.stdin.write(userid);
+  pythonProcess.stdin.end();
+
+  pythonProcess.stdout.on('data', (data) => {
+    // Append the output from the Python script to the outputData variable
+    const output = data.toString().trim();
+    outputData += output;
+  });
+
+  pythonProcess.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  pythonProcess.on('exit', (code) => {
+    console.log(`Child process exited with code ${code}`);
+
+    // Process the captured output
+    console.log("Recommendation Results:");
+    console.log(outputData);
+
+    // Send the output as the response
+    res.send(outputData);
+  });
+});
+ 
 module.exports = app
+
+
